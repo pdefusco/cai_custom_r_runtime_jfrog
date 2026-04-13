@@ -65,18 +65,22 @@ docker push \
 
 Validate build by going to "Artifactory" -> "Artifacts" -> "<name-of-your-repository>"
 
-![alt text](img/project-runtimes-1.png)
+![alt text](img/jfrog-build.png)
 
 ### 3. Create Docker Credentials in Cloudera AI Workbench
+
+Generate a Token in jfrog.
 
 Navigate to "Site Administration" -> "Runtimes" -> "Docker Credentials" and create a new credential and set the following fields:
 
 ```
 Name: sparklyr-jfrog-credentials
-Server: the full image URI as shown when the repository is created e.g. "https://trialq7b92r.jfrog.io/artifactory/cldr-demo-docker-local/cai-sparklyr-jfrog/latest/" - this value is also available in the jfrog UI under Artifacts.
-Username: your jfrog username
-Password: your jfrog password
+Server: the image build e.g. "trialq7b92r.jfrog.io/cldr-demo-docker-local/cai-sparklyr-jfrog:latest"
+Username: <your-jfrog-username>
+Password: <your-jfrog-token>
 ```
+
+Notice that when creating the Docker Credentials, the value used in the form for the "Server" is the same value that was used from the docker cli to build the image, in this case ```trialq7b92r.jfrog.io/cldr-demo-docker-local/cai-sparklyr-jfrog:latest```. This is the same value used in the "Server" field when creating the Docker Credentials.
 
 ### 4. Import Runtime in the Catalog and Run Test Session
 
@@ -84,10 +88,68 @@ In the Runtime Catalog, select the "Add Runtime" icon.
 
 Apply the previously configured credentials and input the entire URI path in the "Registry of Docker Image to Upload" field.
 
-The image will now become available in the Runtime Catalog UI
+The image will now become available in the Runtime Catalog UI.
+
+![alt text](img/creds-0.png)
+
+![alt text](img/creds-1.png)
+
+![alt text](img/runtime-catalog-1.png)
+
+![alt text](img/runtime-catalog-2.png)
+
+Notice that when adding the runtime to the Runtime Catalog, the value used in the form for the "Registry of Docker Image to Upload" is the same value that was used from the docker cli to build the image, in this case ```trialq7b92r.jfrog.io/cldr-demo-docker-local/cai-sparklyr-jfrog:latest```. This is the same value used in the "Server" field when creating the Docker Credentials.
+
+![alt text](img/runtime-catalog-2.png)
 
 ### 5. Run Test Session
 
 Clone this GitHub repository as a new CAI project and add the new runtime.
 
+![alt text](img/project-runtimes-1.png)
+
 Create a test session and run the code. Notice the URI is now showing as the Runtime ID in the Session UI.
+
+```
+Name: Sparklyr Test Session
+Editor: Workbench
+Kernel: R 4.5
+Edition: Community
+Version: 2026.03
+Enable Spark: version 3.5
+Enable GPU: none
+Resource Profile: 2 vCPU / 4 GiB Memory
+```
+
+![alt text](img/session-1.png)
+
+Next, run "sparklyrtest.R" and validate output.
+
+![alt text](img/session-2.png)
+
+![alt text](img/session-3.png)
+
+## Summary and Next Steps
+
+**Cloudera AI Runtimes** provide a structured way to package and manage reproducible environments for data science and machine learning workloads, enabling teams to define lightweight, customizable containers with specific editors, languages, and dependency stacks.
+
+Runtimes are registered and managed in the Runtime Catalog, which lists all available standard and custom environments for interactive sessions or production workloads, and can be imported from Jfrog and other image registries.
+
+Administrators and data scientists can create and import new runtimes in the catalog by adding custom images and credentials, enabling secure access to registries like Jfrog and on‑prem registries, and ensuring that the right tools and packages are available where and when teams need them. ([Cloudera Documentation][1])
+
+### Cloudera AI Runtime Documentation & Blogs
+
+* **Runtime Catalog documentation** – Official guide to viewing and managing the Runtime Catalog in Cloudera AI. ([Cloudera Documentation][1])
+  *[https://docs.cloudera.com/machine-learning/1.5.5/runtimes/topics/ml-using-runtime-catalog.html](https://docs.cloudera.com/machine-learning/1.5.5/runtimes/topics/ml-using-runtime-catalog.html)*
+
+* **Adding new ML Runtimes** – How to register custom ML Runtimes and add Docker registry credentials. ([Cloudera Documentation][2])
+  *[https://docs.cloudera.com/machine-learning/cloud/managing-runtimes/topics/ml-adding-new-ml-runtimes.html](https://docs.cloudera.com/machine-learning/cloud/managing-runtimes/topics/ml-adding-new-ml-runtimes.html)*
+
+* **Adding Docker registry credentials in CAI** – Instructions for adding Docker registry credentials (e.g., ECR) for pulling images. ([Cloudera Documentation][3])
+  *[https://docs.cloudera.com/machine-learning/1.5.5/managing-runtimes/topics/ml-add-docker-registry-credentials-runtimes.html](https://docs.cloudera.com/machine-learning/1.5.5/managing-runtimes/topics/ml-add-docker-registry-credentials-runtimes.html)*
+
+* **ML Runtimes overview and customization** – Full docs on ML Runtimes, editors, kernels, add‑ons, and custom images. ([Cloudera Documentation][4])
+  *[https://docs.cloudera.com/machine-learning/cloud/runtimes/index.html](https://docs.cloudera.com/machine-learning/cloud/runtimes/index.html)*
+
+* **Cloudera Blog: Building Custom Runtimes with Editors** – Example of customizing and using different editors in ML Runtimes. ([blog.cloudera.com][5])
+  *[https://blog.cloudera.com/building-custom-runtimes-with-editors-in-cloudera-machine-learning/](https://blog.cloudera.com/building-custom-runtimes-with-editors-in-cloudera-machine-learning/)*
