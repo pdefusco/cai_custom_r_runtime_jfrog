@@ -100,8 +100,6 @@ The image will now become available in the Runtime Catalog UI.
 
 Notice that when adding the runtime to the Runtime Catalog, the value used in the form for the "Registry of Docker Image to Upload" is the same value that was used from the docker cli to build the image, in this case ```trialq7b92r.jfrog.io/cldr-demo-docker-local/cai-sparklyr-jfrog:latest```. This is the same value used in the "Server" field when creating the Docker Credentials.
 
-![alt text](img/runtime-catalog-2.png)
-
 ### 5. Run Test Session
 
 Clone this GitHub repository as a new CAI project and add the new runtime.
@@ -133,9 +131,9 @@ Next, run "sparklyrtest.R" and validate output.
 
 **Cloudera AI Runtimes** provide a structured way to package and manage reproducible environments for data science and machine learning workloads, enabling teams to define lightweight, customizable containers with specific editors, languages, and dependency stacks.
 
-Runtimes are registered and managed in the Runtime Catalog, which lists all available standard and custom environments for interactive sessions or production workloads, and can be imported from Jfrog and other image registries.
+Runtimes are registered and managed in the Runtime Catalog, which lists all available standard and custom environments for interactive sessions or production workloads, and can be imported from jfrog and other image registries.
 
-Administrators and data scientists can create and import new runtimes in the catalog by adding custom images and credentials, enabling secure access to registries like Jfrog and on‑prem registries, and ensuring that the right tools and packages are available where and when teams need them. ([Cloudera Documentation][1])
+Administrators and data scientists can create and import new runtimes in the catalog by adding custom images and credentials, enabling secure access to registries like jfrog and on‑prem registries, and ensuring that the right tools and packages are available where and when teams need them. ([Cloudera Documentation][1])
 
 ### Cloudera AI Runtime Documentation & Blogs
 
